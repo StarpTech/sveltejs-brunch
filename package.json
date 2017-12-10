@@ -1,0 +1,38 @@
+{
+  "name": "sveltejs-brunch",
+  "version": "0.0.0",
+  "description": "Compile Svelte components inside Brunch projects",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier ./*.js --write",
+    "patch": "np patch --yolo",
+    "minor": "np minor --yolo",
+    "major": "np major --yolo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StarpTech/sveltejs-brunch.git"
+  },
+  "keywords": [
+    "svelte",
+    "brunch",
+    "compiler"
+  ],
+  "author": "Dustin Deus <deusdustin@gmail.com> (http://www.starptech.de)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StarpTech/sveltejs-brunch/issues"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "homepage": "https://github.com/StarpTech/sveltejs-brunch#readme",
+  "dependencies": {
+    "svelte": "^1.46.0"
+  },
+  "devDependencies": {
+    "np": "^2.18.2",
+    "prettier": "^1.9.1"
+  }
+}
