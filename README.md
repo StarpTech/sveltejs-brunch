@@ -12,10 +12,19 @@ By default all `*.svelte.html`, `.svelte` files are compiled, unless you use the
 
 # Advanced usage
 
+- Extract CSS
+- Preprocessing of html, css, script
+- File Pattern
+- Svelte compiler options
+
 ```js
 module.exports.plugins = {
   sveltejs: {
-    pattern: /\.(svelte|html)$/ // By default, svelte, svelte.html is used.
+    // To extract the CSS into files, simply include to extractCSS option in your Brunch config like so...
+    extractCSS: true,
+    out: './public/components.css',
+    // By default, svelte, svelte.html are used.
+    pattern: /\.(svelte|html)$/
     // Optionally, preprocess components with svelte.preprocess:
     // https://github.com/sveltejs/svelte#preprocessor-options
     preprocess: {
