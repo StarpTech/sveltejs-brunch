@@ -23,8 +23,8 @@ class SvelteCompiler {
   }
 
   compile({ data }) {
-    return svelte.preprocess(data, this.opts.preprocess).then(() => {
-      return svelte.compile(data, this.opts).code
+    return svelte.preprocess(data, this.opts.preprocess).then((result) => {
+      return svelte.compile(result.toString(), this.opts).code
     })
   }
 }
