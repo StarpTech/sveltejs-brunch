@@ -5,6 +5,12 @@
 
 Compile [Svelte](https://github.com/sveltejs/svelte) components inside [Brunch](https://github.com/brunch/brunch) projects.
 
+- Extract the CSS into a separate file
+- Use Sourcemaps
+- Preprocessing of html (minifier), css (SASS), script
+- Define file extensions which should be compiled
+- Pass any Svelte compiler option
+
 # Installation
 
 ```
@@ -14,12 +20,6 @@ npm install --save-dev sveltejs-brunch
 By default all `*.svelte.html`, `.svelte` files are compiled, unless you use the `pattern` option.
 
 # Advanced usage
-
-- Extract CSS
-- Sourcemaps
-- Preprocessing of html, css, script
-- File Pattern
-- Pass Svelte compiler options
 
 ```js
 module.exports.plugins = {
