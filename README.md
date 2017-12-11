@@ -13,9 +13,10 @@ By default all `*.svelte.html`, `.svelte` files are compiled, unless you use the
 # Advanced usage
 
 - Extract CSS
+- Sourcemaps
 - Preprocessing of html, css, script
 - File Pattern
-- Svelte compiler options
+- Pass Svelte compiler options
 
 ```js
 module.exports.plugins = {

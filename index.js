@@ -2,6 +2,21 @@
 
 const svelte = require('svelte')
 const fs = require('fs')
+const path = require('path')
+
+function sanitize(input) {
+  return path
+    .basename(input)
+    .replace(path.extname(input), '')
+    .replace(/[^a-zA-Z_$0-9]+/g, '_')
+    .replace(/^_/, '')
+    .replace(/_$/, '')
+    .replace(/^(\d)/, '_$1')
+}
+
+function capitalize(str) {
+  return str[0].toUpperCase() + str.slice(1)
+}
 
 class SvelteCompiler {
   constructor(cfg) {
@@ -15,28 +30,50 @@ class SvelteCompiler {
       delete opts.pattern
     }
 
-    this.opts.onerror = err => {
-      console.error(err.message)
-    }
-
-    this.opts.onwarn = warning => {
-      console.warn(warning.message)
-    }
+    if (this.opts.extractCSS) this.opts.css = false
   }
   onCompile() {
-    this.extractCSS()
+    if (this.opts.extractCSS) {
+      this.extractCSS()
+    }
   }
   compile(args) {
-    return svelte.preprocess(args.data, this.opts.preprocess).then(result => {
-      const compiled = svelte.compile(result.toString(), this.opts)
+    if (!this.opts.name) this.opts.name = capitalize(sanitize(args.path))
 
-      if (this.opts.extractCSS) {
+    return svelte.preprocess(args.data, this.opts.preprocess).then(result => {
+      let { code, map, css, cssMap } = svelte.compile(
+        result.toString(),
+        Object.assign(
+          {
+            filename: args.path
+          },
+          {
+            onwarn: warning => {
+              // TODO replace this with warning.code, post sveltejs/svelte#824
+              if (
+                options.css === false &&
+                warning.message === 'Unused CSS selector'
+              )
+                return
+              console.warn(warning)
+            },
+            onerror: error => console.error(error)
+          },
+          this.opts
+        )
+      )
+
+      if (this.opts.extractCSS && css) {
         this.cssLookup.set(args.path, {
-          code: compiled.css
+          code: css,
+          map: cssMap
         })
       }
 
-      return compiled.code
+      return {
+        data: code,
+        map
+      }
     })
   }
   extractCSS() {
@@ -44,7 +81,6 @@ class SvelteCompiler {
     let css = ''
     for (let chunk of this.cssLookup.values()) {
       if (!chunk.code) continue
-
       css += chunk.code + '\n'
     }
 
