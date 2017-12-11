@@ -7,7 +7,7 @@ Compile [Svelte](https://github.com/sveltejs/svelte) components inside [Brunch](
 
 - Extract the CSS into a separate file
 - Use Sourcemaps
-- Preprocessing of html (minifier), css (SASS), script
+- Preprocessing of markup, style, script
 - Define file extensions which should be compiled
 - Pass any Svelte compiler option
 
