@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/sveltejs-brunch.svg?maxAge=3600)](https://www.npmjs.com/package/sveltejs-brunch)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](#badge)
 
-Compile Svelte components inside Brunch projects
+Compile [Svelte](https://github.com/sveltejs/svelte) components inside [Brunch](https://github.com/brunch/brunch) projects.
 
 # Installation
 
