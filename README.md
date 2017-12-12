@@ -6,7 +6,7 @@
 Compile [Svelte](https://github.com/sveltejs/svelte) components inside [Brunch](https://github.com/brunch/brunch) projects.
 
 - Extract the CSS into a separate file
-- Use Sourcemaps
+- Support CSS & JS Sourcemaps
 - Preprocessing of markup, style, script
 - Define file extensions which should be compiled
 - Pass any Svelte compiler option
@@ -26,6 +26,9 @@ module.exports.plugins = {
   sveltejs: {
     // To extract the CSS into files, simply include to extractCSS option in your Brunch config like so...
     extractCSS: true,
+    // To combine the sourcemaps from all components into one
+    combineSourceMapCSS: true,
+    // The generated combined css file
     out: './public/components.css',
     // By default, svelte, svelte.html are used.
     pattern: /\.(svelte|html)$/

@@ -3,6 +3,7 @@
 const svelte = require('svelte')
 const fs = require('fs')
 const path = require('path')
+const combine = require('combine-source-map')
 
 function sanitize(input) {
   return path
@@ -66,7 +67,8 @@ class SvelteCompiler {
       if (this.opts.extractCSS && css) {
         this.cssLookup.set(args.path, {
           code: css,
-          map: cssMap
+          map: cssMap,
+          path: args.path
         })
       }
 
@@ -79,9 +81,33 @@ class SvelteCompiler {
   extractCSS() {
     const outPath = this.opts.out || this.opts.o || 'bundle.css'
     let css = ''
+    let sourceMapCombiner = combine.create(path.basename(outPath))
+    let offset = 0
+    
     for (let chunk of this.cssLookup.values()) {
       if (!chunk.code) continue
       css += chunk.code + '\n'
+
+      if (this.opts.combineSourceMapCSS) {
+        sourceMapCombiner.addFile(
+          {
+            source:
+              chunk.code + '\n/*# sourceMappingURL=' + chunk.map.toUrl() + '*/',
+            sourceFile: chunk.path
+          },
+          {
+            line: offset
+          }
+        )
+        offset += 1
+      }
+    }
+
+    if (this.opts.combineSourceMapCSS) {
+      css +=
+        '\n/*# sourceMappingURL=data:application/json;base64,' +
+        sourceMapCombiner.base64() +
+        '*/'
     }
 
     if (typeof outPath === 'object' && outPath.write) {

@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/StarpTech/sveltejs-brunch#readme",
   "dependencies": {
+    "combine-source-map": "^0.8.0",
     "svelte": "^1.46.0"
   },
   "devDependencies": {
