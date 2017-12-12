@@ -1,6 +1,6 @@
 {
   "name": "sveltejs-brunch",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Compile Svelte components inside Brunch projects",
   "main": "index.js",
   "scripts": {
