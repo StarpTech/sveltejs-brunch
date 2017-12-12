@@ -45,4 +45,4 @@ module.exports.plugins = {
 }
 ```
 # Caveats
-There are some [limitation](https://github.com/Rich-Harris/svelte-preprocessor-demo#future-work) regarding to sourcemaps. Svelve precompilation step does not consume sourcmaps from the precompilation steps and that's the reason why your code does not point to the exact original code. You can test this if you postCSS your styles.
+There are some [limitation](https://github.com/Rich-Harris/svelte-preprocessor-demo#future-work) regarding to sourcemaps. Svelve precompilation step does not consume sourcmaps that's the reason why your code does not point to the exact original code. You can test this if you postCSS your styles.
