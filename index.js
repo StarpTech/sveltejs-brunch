@@ -1,6 +1,5 @@
 'use strict'
-
-const svelte = require('svelte')
+const svelte = require('svelte/compiler.js')
 const fs = require('fs')
 const path = require('path')
 const combine = require('combine-source-map')
@@ -22,7 +21,9 @@ function capitalize(str) {
 class SvelteCompiler {
   constructor(cfg) {
     this.opts = cfg.plugins.sveltejs || {}
-    this.opts.preprocess = this.opts.preprocess || {}
+    // svelte 3 throws error if unknown key exists in compile options
+    this.preProcessOpts = this.opts.preprocess || {}
+    delete this.opts.preprocess
     this.opts.format = this.opts.format || 'cjs'
     this.cssLookup = new Map()
 
@@ -41,27 +42,10 @@ class SvelteCompiler {
   compile(args) {
     if (!this.opts.name) this.opts.name = capitalize(sanitize(args.path))
 
-    return svelte.preprocess(args.data, this.opts.preprocess).then(result => {
-      let { code, map, css, cssMap } = svelte.compile(
+    return svelte.preprocess(args.data, this.preProcessOpts).then(result => {
+      let {js, css, ast} = svelte.compile(
         result.toString(),
-        Object.assign(
-          {
-            filename: args.path
-          },
-          {
-            onwarn: warning => {
-              // TODO replace this with warning.code, post sveltejs/svelte#824
-              if (
-                options.css === false &&
-                warning.message === 'Unused CSS selector'
-              )
-                return
-              console.warn(warning)
-            },
-            onerror: error => console.error(error)
-          },
-          this.opts
-        )
+        Object.assign({ filename: args.path }, this.opts)
       )
 
       if (this.opts.extractCSS && css) {
@@ -73,11 +57,12 @@ class SvelteCompiler {
       }
 
       return {
-        data: code,
-        map
+        data: js.code,
+        map: js.map
       }
     })
   }
+
   extractCSS() {
     const outPath = this.opts.out || this.opts.o || 'bundle.css'
     let css = ''
