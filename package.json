@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "format": "prettier ./*.js --write",
-    "patch": "np patch --yolo",
-    "minor": "np minor --yolo",
-    "major": "np major --yolo",
+    "patch": "np patch --yolo --no-yarn",
+    "minor": "np minor --yolo --no-yarn",
+    "major": "np major --yolo --no-yarn",
     "test": "jest"
   },
   "repository": {
