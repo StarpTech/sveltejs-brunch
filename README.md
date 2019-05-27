@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/sveltejs-brunch.svg?maxAge=3600)](https://www.npmjs.com/package/sveltejs-brunch)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](#badge)
 
-Compile [Svelte](https://github.com/sveltejs/svelte) components inside [Brunch](https://github.com/brunch/brunch) projects.
+Compile [Svelte 3](https://github.com/sveltejs/svelte) components inside [Brunch](https://github.com/brunch/brunch) projects.
 
 - Extract the CSS into a separate file
 - Support CSS & JS Sourcemaps
