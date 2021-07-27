@@ -1,5 +1,5 @@
 'use strict'
-const svelte = require('svelte/compiler.js')
+const svelte = require('svelte/compiler')
 const fs = require('fs')
 const path = require('path')
 const combine = require('combine-source-map')
