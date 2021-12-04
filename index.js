@@ -43,7 +43,7 @@ class SvelteCompiler {
     if (!this.opts.name) this.opts.name = capitalize(sanitize(args.path))
 
     return svelte.preprocess(args.data, this.preProcessOpts).then(result => {
-      let {js, css, ast} = svelte.compile(
+      let { js, css, ast } = svelte.compile(
         result.toString(),
         Object.assign({ filename: args.path }, this.opts)
       )
@@ -55,6 +55,11 @@ class SvelteCompiler {
           path: args.path
         })
       }
+
+      /**
+       * {@since 1.0.2 - Preserve the correct file path for source map generation in brunch}
+      */
+      js.map.sources = [args.path];
 
       return {
         data: js.code,
@@ -68,7 +73,7 @@ class SvelteCompiler {
     let css = ''
     let sourceMapCombiner = combine.create(path.basename(outPath))
     let offset = 0
-    
+
     for (let chunk of this.cssLookup.values()) {
       if (!chunk.code) continue
       css += chunk.code + '\n'

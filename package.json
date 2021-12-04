@@ -1,6 +1,6 @@
 {
   "name": "sveltejs-brunch",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Compile Svelte components inside Brunch projects",
   "main": "index.js",
   "scripts": {
@@ -31,7 +31,7 @@
   "homepage": "https://github.com/StarpTech/sveltejs-brunch#readme",
   "dependencies": {
     "combine-source-map": "^0.8.0",
-    "svelte": "^3.41.0"
+    "svelte": "^3.44.2"
   },
   "devDependencies": {
     "jest": "^27.0.6",

@@ -60,3 +60,7 @@ typings/
 # Only apps should have lockfiles
 yarn.lock
 package-lock.json
+
+#Ignore Vim Stuff
+.undodir
+Session.vim

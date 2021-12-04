@@ -1,7 +1,3 @@
-// example program taken from official svelte examples
-// https://svelte.dev/examples#bar-chart
-
-const svelteText = `
 <script>
 	import { scaleLinear } from 'd3-scale';
 
@@ -120,6 +116,3 @@ const svelteText = `
 		</g>
 	</svg>
 </div>
-`
-
-module.exports = svelteText
