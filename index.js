@@ -29,7 +29,7 @@ class SvelteCompiler {
 
     if (this.opts.pattern) {
       this.pattern = this.opts.pattern
-      delete opts.pattern
+      delete this.opts.pattern
     }
 
     if (this.opts.extractCSS) this.opts.css = false
