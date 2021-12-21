@@ -45,6 +45,9 @@ class SvelteCompiler {
     if (!this.opts.name) this.opts.name = capitalize(sanitize(args.path))
 
     return svelte
+      /**
+       * {@since 1.0.3} - Make sure to pass through {filename: args.path} to svelte preprocessor
+      */
       .preprocess(args.data, this.preProcessOpts, { filename: args.path })
       .then((result) => {
         let { js, css, ast } = svelte.compile(
