@@ -34,15 +34,17 @@ class SvelteCompiler {
 
     if (this.opts.extractCSS) this.opts.css = false
   }
+
   onCompile() {
     if (this.opts.extractCSS) {
       this.extractCSS()
     }
   }
+
   compile(args) {
     if (!this.opts.name) this.opts.name = capitalize(sanitize(args.path))
 
-    return svelte.preprocess(args.data, this.preProcessOpts).then(result => {
+      return svelte.preprocess(args.data, this.preProcessOpts, {filename: args.path}).then((result) => {
       let { js, css, ast } = svelte.compile(
         result.toString(),
         Object.assign({ filename: args.path }, this.opts)
@@ -52,18 +54,18 @@ class SvelteCompiler {
         this.cssLookup.set(args.path, {
           code: css,
           map: cssMap,
-          path: args.path
+          path: args.path,
         })
       }
 
       /**
        * {@since 1.0.2 - Preserve the correct file path for source map generation in brunch}
-      */
-      js.map.sources = [args.path];
+       */
+      js.map.sources = [args.path]
 
       return {
         data: js.code,
-        map: js.map
+        map: js.map,
       }
     })
   }
@@ -83,10 +85,10 @@ class SvelteCompiler {
           {
             source:
               chunk.code + '\n/*# sourceMappingURL=' + chunk.map.toUrl() + '*/',
-            sourceFile: chunk.path
+            sourceFile: chunk.path,
           },
           {
-            line: offset
+            line: offset,
           }
         )
         offset += 1
