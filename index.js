@@ -44,35 +44,37 @@ class SvelteCompiler {
   compile(args) {
     if (!this.opts.name) this.opts.name = capitalize(sanitize(args.path))
 
-    return svelte
-      /**
-       * {@since 1.0.3} - Make sure to pass through {filename: args.path} to svelte preprocessor
-      */
-      .preprocess(args.data, this.preProcessOpts, { filename: args.path })
-      .then((result) => {
-        let { js, css, ast } = svelte.compile(
-          result.toString(),
-          Object.assign({ filename: args.path }, this.opts)
-        )
-
-        if (this.opts.extractCSS && css) {
-          this.cssLookup.set(args.path, {
-            code: css,
-            map: cssMap,
-            path: args.path,
-          })
-        }
-
+    return (
+      svelte
         /**
-         * {@since 1.0.2 - Preserve the correct file path for source map generation in brunch}
+         * {@since 1.0.4} - Make sure to pass through {filename: args.path} to svelte preprocessor
          */
-        js.map.sources = [args.path]
+        .preprocess(args.data, this.preProcessOpts, { filename: args.path })
+        .then((result) => {
+          let { js, css, ast } = svelte.compile(
+            result.toString(),
+            Object.assign({ filename: args.path }, this.opts)
+          )
 
-        return {
-          data: js.code,
-          map: js.map,
-        }
-      })
+          if (this.opts.extractCSS && css) {
+            this.cssLookup.set(args.path, {
+              code: css,
+              map: cssMap,
+              path: args.path,
+            })
+          }
+
+          /**
+           * {@since 1.0.2 - Preserve the correct file path for source map generation in brunch}
+           */
+          js.map.sources = [args.path]
+
+          return {
+            data: js.code,
+            map: js.map,
+          }
+        })
+    )
   }
 
   extractCSS() {
